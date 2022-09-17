@@ -1,0 +1,80 @@
+//QUestion : Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's. You must do it in place
+/* Algo : 
+1) check 1st row and 1st col 
+2) traversing inner matrix (except first row and col ) if 0 than storein in 1st row and col
+3) travers 1st row and set inner matrix 
+4) traverse 2nd row and set outer matrix 
+5) if rflag 1 then set row 1 to 0
+6) if cflag 1 then set col 1 to 0 
+
+Time complexity : O( N*M) each step take entrire traversal of matrix 
+space : O(1) 
+
+*/
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+       int rows = matrix.size() , cols = matrix[0].size();
+       //step1 : chek 1st row and col 
+       int rflag = 0 , cflag =0 ;
+        for( int i = 0 ; i< cols ; ++i )
+        {
+            if(matrix[0][i] == 0 )
+            {
+                rflag = 1;
+                break;
+            }
+        }
+        for( int i =0 ; i < rows ; ++i )
+        {
+            if( matrix[i][0] == 0 )
+            {
+                cflag = 1;
+                break;
+            }
+        }
+        
+        //Step 2 : inner traversal 
+        for( int i = 1 ; i < rows ; ++i )
+        {
+            for( int j = 1 ;j < cols ;++j )
+            {
+                if( matrix[i][j]==0)
+                {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        
+        //Step 3 : do inner operation 
+        for( int i = 1 ; i < cols ; ++i )
+        {    
+            
+            if( matrix[0][i] ==0 )
+            {
+                for( int j = 1 ; j < rows ;++j  )
+                    matrix[j][i] = 0;
+            }
+        }
+        for( int i = 1 ; i < rows ; ++i )
+        {
+            if( matrix[i][0]==0)
+            {
+                for( int j = 1 ; j < cols ; ++j )
+                    matrix[i][j] = 0 ;
+            }
+        }
+        
+        if( rflag == 1 )
+        {
+            for( int i = 0 ; i < cols ;++i)
+                matrix[0][i] = 0;
+        }
+        if( cflag == 1 )
+        {
+            for( int i = 0 ; i < rows; ++i )
+                matrix[i][0] =0;
+        }
+    }
+};
