@@ -1,0 +1,36 @@
+vector<int> morriesinorder(TreeNode *root )
+    {
+        TreeNode *temproot = root;
+        vector<int> inorder;
+        while(temproot)
+        {
+             // Left Subtree does not Exit
+            if(temproot->left == nullptr ) 
+            {
+                inorder.push_back(temproot->val);
+                temproot = temproot->right;
+            }
+            
+            // left Subtree Exit :  if ( thereed present visit root and remove therad and move right )
+            else if (temproot->left != nullptr )
+            {
+                TreeNode *rightmost = temproot->left;   // find rightmost of left subtree
+                while(rightmost->right && rightmost->right!=temproot)
+                {
+                    rightmost = rightmost->right;
+                }
+                if(rightmost->right == nullptr ) // if therad is not present than create theread move left 
+                {
+                        rightmost->right = temproot;
+                        temproot = temproot->left;
+                }
+                else if( rightmost->right == temproot)
+                {
+                       inorder.push_back(temproot->val);
+                       rightmost->right = nullptr;
+                       temproot =temproot->right;
+                }
+            }
+        }
+        return inorder;
+    }
