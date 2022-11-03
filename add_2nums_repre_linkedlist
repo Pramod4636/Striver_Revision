@@ -1,0 +1,60 @@
+/* 
+Q : adding 2 numbers represented by liked list 
+link : https://www.codingninjas.com/codestudio/problem-of-the-day/moderate?leftPanelTab=1
+concept :  
+            maintain dummy node to store ans list 
+            loop : any one of the node exit 
+            add to list 
+            assign sum 
+            maintain carray 
+            
+            
+*/
+
+
+#include <bits/stdc++.h> 
+
+// Pramod considered different cases so time wastage: 
+// 2 modification : total number of node = max node of( l1 or l2 ) move thet many time
+// each time find least significat digit sum 
+// which is either l1 and l2 or l1 or l2 
+Node *addTwoNumbers(Node *l1, Node *l2)
+{
+    Node *dummynode = new Node(0) ;  // to store list
+    Node *last = dummynode;
+    int carr = 0 ; 
+    while( l1!=nullptr || l2!=nullptr) // any one of node exit then add to ans put sum and take carray 
+    {
+        int sum = 0;
+        if( l1 ) // linking node to ans list 
+        {
+            last->next = l1 ;
+            last = l1 ;
+        }
+        else 
+        {
+            last->next = l2 ;
+            last = l2;
+        }
+           
+        if( l1 )
+        {
+            sum += l1->data;
+            l1 = l1->next;
+        }
+        if( l2 )
+        {
+            sum += l2->data;
+            l2 = l2->next;
+        }
+        sum = sum + carr;
+        last->data = sum%10;
+        carr = sum/10;
+    }
+    if( carr )
+    {
+        Node *temp = new Node(1);
+        last->next = temp;
+    }
+    return dummynode->next;
+}
